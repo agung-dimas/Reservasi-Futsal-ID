@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -19,12 +18,10 @@ return new class extends Migration
             // Add verification fields
             $table->timestamp('verified_at')->nullable()->after('payment_proof');
             $table->string('verified_by')->nullable()->after('verified_at');
+            
+            // Change payment_status to string with default value (compatible with SQLite and MySQL)
+            $table->string('payment_status')->default('pending')->change();
         });
-        
-        // Update enum values for payment_status (MySQL only - SQLite doesn't support MODIFY)
-        if (DB::connection()->getDriverName() !== 'sqlite') {
-            DB::statement("ALTER TABLE payment_details MODIFY payment_status ENUM('pending', 'verified', 'rejected', 'success', 'failed') DEFAULT 'pending'");
-        }
     }
 
     /**
