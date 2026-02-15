@@ -727,6 +727,6 @@ Aplikasi Reservasi Futsal ini telah **MEMENUHI SEMUA KETENTUAN** Tugas Akhir PBO
 
 ---
 
-**Dibuat oleh:** GitHub Copilot & Team Development  
+**Dibuat oleh:** Team Development  
 **Tanggal:** 25 November 2025  
 **Versi:** 1.0
