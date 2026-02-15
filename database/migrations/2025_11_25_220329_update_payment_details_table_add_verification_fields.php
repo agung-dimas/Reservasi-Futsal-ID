@@ -21,8 +21,10 @@ return new class extends Migration
             $table->string('verified_by')->nullable()->after('verified_at');
         });
         
-        // Update enum values for payment_status
-        DB::statement("ALTER TABLE payment_details MODIFY payment_status ENUM('pending', 'verified', 'rejected', 'success', 'failed') DEFAULT 'pending'");
+        // Update enum values for payment_status (MySQL only - SQLite doesn't support MODIFY)
+        if (DB::connection()->getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE payment_details MODIFY payment_status ENUM('pending', 'verified', 'rejected', 'success', 'failed') DEFAULT 'pending'");
+        }
     }
 
     /**
